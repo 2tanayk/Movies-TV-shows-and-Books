@@ -20,10 +20,7 @@ public void moviescall(View view){
         Intent i=new Intent(MainActivity.this,books.class);
         startActivity(i);
     }
-    public void tvshowscall(View view){
-        Intent i=new Intent(MainActivity.this,tvshows.class);
-        startActivity(i);
-    }
+
     public void Podcastcall(View view){
         Intent i=new Intent(MainActivity.this,podcastpage.class);
         startActivity(i);
