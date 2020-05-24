@@ -21,10 +21,7 @@ public void moviescall(View view){
         startActivity(i);
     }
 
-    public void Podcastcall(View view){
-        Intent i=new Intent(MainActivity.this,podcastpage.class);
-        startActivity(i);
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
