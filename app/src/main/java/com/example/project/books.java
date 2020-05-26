@@ -1,5 +1,6 @@
 package com.example.project;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -9,6 +10,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.app.*;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethod;
@@ -33,11 +35,14 @@ import java.net.URLEncoder;
 public class books extends AppCompatActivity
 {
     TextView textViewb,displayTextViewb;
-    EditText editTextb;
+    EditText    editTextb;
     ImageView displayImageViewb;
     String book;
-    Button b;
+    String encodedBookName;
+    Button b,back;
     ConstraintLayout searchView,displayView;
+
+
 
     public class DownloadTask extends AsyncTask<String,Void,String>
     {
@@ -63,6 +68,7 @@ public class books extends AppCompatActivity
                     data=reader.read();
 
                 }
+                Log.i("Result",result+"");
                 return result;
 
 
@@ -85,7 +91,7 @@ public class books extends AppCompatActivity
                 JSONObject obj2=jsonObject.getJSONObject("book");
 
                 String title=obj2.getString("title");
-                String sub_title=obj2.getString("sub_title");
+                //String sub_title=obj2.getString("sub_title");
                 String author=obj2.getString("author");
                 String review_count=obj2.getString("review_count");
                 String rating=obj2.getString("rating");
@@ -95,9 +101,12 @@ public class books extends AppCompatActivity
                 String pages=obj2.getString("pages");
                 String release_date=obj2.getString("release_date");
 
-                displayTextViewb.setText("title:"+title+"\r\n"+"sub title:"+sub_title+"\r\n"+"author:"+author+"\r\n"+"reviews:"+review_count+"\r\n"+"rating:"+rating+"\r\n"+"to read or not:"+to_read_or_not+"\r\n"+"detailed link:"+detail_link+"\r\n"+"genre:"+genre+"\r\n"+"pages:"+pages+"\r\n"+"release date:"+release_date+"\r\n");
+                //Log.i("Content","title:"+title+"\r\n"+"author:"+author+"\r\n"+"reviews:"+review_count+"\r\n"+"rating:"+rating+"\r\n"+"to read or not:"+to_read_or_not+"\r\n"+"detailed link:"+detail_link+"\r\n"+"genre:"+genre+"\r\n"+"pages:"+pages+"\r\n"+"release date:"+release_date+"\r\n");
+              // String link="<a href="
 
-                JSONArray arr=new JSONArray(obj2.getString("critic_reviews"));
+                displayTextViewb.setText("Title: "+title+"\r\n"+"Author:"+author+"\r\n"+"Reviews:"+review_count+"\r\n"+"Rating:"+rating+"\r\n\r\n"+"detailed review :"+detail_link+"\r\n\r\n"+"Genre:"+genre+"\r\n"+"Pages:"+pages+"\r\n"+"Release date:"+release_date+"\r\n");
+
+                //  JSONArray arr=new JSONArray(obj2.getString("critic_reviews"));
 
                  /*String bookInfo = jsonObject.getString("book");
 
@@ -111,7 +120,7 @@ public class books extends AppCompatActivity
 
                 //String message = "";
 
-                for (int i=0; i < arr.length(); i++)
+               /* for (int i=0; i < arr.length(); i++)
                 {
                     JSONObject jsonPart = arr.getJSONObject(i);
                     try {
@@ -126,19 +135,14 @@ public class books extends AppCompatActivity
 
                         displayTextViewb.append("snippet:"+snippet+"\r\n"+"source:"+source+"\r\n"+"review link:"+review_link+"\r\n"+"positive/negative:"+pos_or_neg+"\r\n"+"star rating:"+star_rating+"\r\n"+"review date:"+review_date+"\r\n"+"smiley/sad:"+smiley_or_sad+"\r\n"+"source:"+source_logo);
 
-                    /* if (!main.equals("") && !description.equals("")) {
-                         message += main + ": " + description + "\r\n";*/
+
                     }catch (Exception e)
                     {
                         e.printStackTrace();
                     }
-                }
+                }*/
 
-                /* if (!message.equals("")) {
-                     resultTextView.setText(message);
-                 } else {
-                     Toast.makeText(getApplicationContext(),"Could not find weather :(",Toast.LENGTH_SHORT).show();
-                 } */
+
 
             }//try ends
             catch (Exception e) {
@@ -154,22 +158,27 @@ public class books extends AppCompatActivity
 
     public void getBook(View view)
     {
-
+        book="";
+        encodedBookName="";
         book=editTextb.getText().toString();
+
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(editTextb.getWindowToken(), 0);
-
+        editTextb.setText("");
         DownloadTask task=new DownloadTask();
         try {
-            String encodedBookName=URLEncoder.encode(book,"UTF-8");
+            encodedBookName=URLEncoder.encode(book,"UTF-8");
 
+
+
+            task.execute("https://idreambooks.com/api/books/reviews.json?q="+encodedBookName+"&key=e4b085b6cb2e446df89b3164508b25573cb03140");
+            //https://idreambooks.com/api/books/reviews.json?q=hunger%20games&key=e4b085b6cb2e446df89b3164508b25573cb03140
+             Thread.sleep(3000);
             b.setVisibility(View.INVISIBLE);
             textViewb.setVisibility(View.INVISIBLE);
             editTextb.setVisibility(View.INVISIBLE);
 
             displayView.setVisibility(View.VISIBLE);
-
-            task.execute("https://idreambooks.com/api/books/reviews.json?q="+encodedBookName+"&key=e4b085b6cb2e446df89b3164508b25573cb03140");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -178,6 +187,19 @@ public class books extends AppCompatActivity
 
     }//getBook ends
 
+    public void goBack(View view)
+    {
+        displayView.setVisibility(View.INVISIBLE);
+
+
+        b.setVisibility(View.VISIBLE);
+        textViewb.setVisibility(View.VISIBLE);
+        editTextb.setVisibility(View.VISIBLE);
+
+        book="";
+        encodedBookName="";
+        displayTextViewb.setText("");
+    }
 
 
     @Override
@@ -197,11 +219,16 @@ public class books extends AppCompatActivity
         textViewb=(TextView)findViewById(R.id.textViewb);
         editTextb=(EditText)findViewById(R.id.searchEditTextb);
         b=(Button)findViewById(R.id.button);
+        back=(Button)findViewById(R.id.backButton);
         searchView=findViewById(R.id.searchView);
         displayView=findViewById(R.id.displayView);
 
         displayImageViewb=(ImageView)findViewById(R.id.displayImageViewb);
         displayTextViewb=(TextView)findViewById(R.id.displayTextViewb);
+        //displayTextViewb.setClickable(true);
+        //displayTextViewb.setMovementMethod(LinkMovementMethod.getInstance());
+
+        displayTextViewb.setText("");
 
         displayView.setVisibility(View.INVISIBLE);
 

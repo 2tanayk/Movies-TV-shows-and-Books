@@ -9,35 +9,45 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="306dp"
-        android:layout_height="95dp"
+        android:layout_width="193dp"
+        android:layout_height="194dp"
 
+        android:layout_marginStart="101dp"
+        android:layout_marginLeft="101dp"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="117dp"
+        android:layout_marginRight="117dp"
+        android:layout_marginBottom="389dp"
         android:clickable="true"
+        android:fontFamily="sans-serif-light"
         android:onClick="moviescall"
         android:text="MOVIES AND TV SHOWS"
         android:textColor="@android:color/holo_orange_light"
-        android:textSize="36sp"
+        android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.116"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.312" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="153dp"
-        android:layout_height="61dp"
+        android:layout_width="183dp"
+        android:layout_height="123dp"
+        android:layout_marginStart="106dp"
+        android:layout_marginLeft="106dp"
+        android:layout_marginTop="357dp"
+        android:layout_marginEnd="122dp"
+        android:layout_marginRight="122dp"
+        android:layout_marginBottom="251dp"
         android:clickable="true"
+        android:fontFamily="sans-serif-light"
         android:onClick="bookcall"
         android:text="BOOKS"
         android:textColor="@android:color/holo_orange_light"
-        android:textSize="36sp"
+        android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.259"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.486" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

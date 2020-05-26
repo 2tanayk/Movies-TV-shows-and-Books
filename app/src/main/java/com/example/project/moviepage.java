@@ -2,10 +2,12 @@ package com.example.project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,9 +35,13 @@ public class moviepage extends AppCompatActivity {
       int c=0;
     String url="https://www.omdbapi.com/?t="+name+"&apikey=b31a4c3e";
     public void searchandresult(View viw){
+
        it=findViewById(R.id.imageView2);
         EditText sear=findViewById(R.id.search);
         name= sear.getText().toString();
+        //InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        //mgr.hideSoftInputFromWindow(sear.getWindowToken(), 0);
+
         url="https://www.omdbapi.com/?t="+name+"&apikey=b31a4c3e";
         RequestQueue R= Volley.newRequestQueue(moviepage.this);
         JsonObjectRequest request =new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>(){
